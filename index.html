@@ -35,76 +35,101 @@ SOFTWARE.
 
 	<script src="lib/ecg2.js"></script>
 
+	<link rel="stylesheet" href="lib/w3.css"> 
+
 	<style>
-		body { font-family: sans-serif; margin: 0; /*padding: 1em;*/ }
+		button:focus {outline:0;}
 
-		div.canvas{
-			width: 100%;
-			height: 60vh;
-			background-color: aqua;
+		i {
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+		.right {
+				transform: rotate(-45deg);
+				-webkit-transform: rotate(-45deg);
 		}
 
-		/*----------------------------------------------------------------------------------------------
-		---------------------------------------------HEADER---------------------------------------------
-		----------------------------------------------------------------------------------------------*/
-		.header {
-    	background: #2c3e50;
-    	overflow: hidden;
-			margin-bottom: 6px;
-			text-align: center;
-			color: white;
-			font-weight: bold;
+		.left {
+				transform: rotate(135deg);
+				-webkit-transform: rotate(135deg);
 		}
 
-		.header-title{
-			display: inline-block;
-			font-size: 25px;
-			padding: 9px;
+		.up {
+				transform: rotate(-135deg);
+				-webkit-transform: rotate(-135deg);
 		}
 
-		/* Style the header links */
-		.header a {
-			float: left;
-			color: white;
-			padding: 9px;
-			text-decoration: none;
-			font-size: 25px;
+		.down {
+				transform: rotate(45deg);
+				-webkit-transform: rotate(45deg);
 		}
-
-		/* Change the background color on mouse-over */
-		.header a:hover {
-			background-color: #ccc;
-			color: black;
-		}
-
-		/* Float the link section to the right */
-		.header-right {
-			float: right;
-		}
-
 	</style>
 </head>
 <body>
-	<div class="header">
-		<div class="header-title">
-			Electrocardiogramme
+	<div class="header w3-blue-grey">
+		<div class="w3-bar w3-border w3-center">
+			<span class="w3-bar-item w3-display-topmiddle w3-xlarge">Electrocardiogramme</span>
+			<a href="#" class="w3-bar-item w3-button w3-right w3-xlarge">?</a>
+		</div> 
+	</div>
+	<div class="w3-row w3-padding w3-center">
+		<div class="w3-container w3-fifth">
+			<div class="w3-dropdown-hover w3-light-grey">
+				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton1">Sportif 1: Repos <i class="arrow down"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+				</div>
+			</div> 
 		</div>
-
-		<div class="header-right">
-    	<a href="#about">?</a>
- 		</div>
+		<div class="w3-container w3-fifth">
+			<div class="w3-dropdown-hover w3-light-grey">
+				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton2">Sportif 2: Repos <i class="arrow down"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+				</div>
+			</div> 
+		</div>
+		<div class="w3-container w3-fifth">
+			<div class="w3-dropdown-hover w3-light-grey">
+				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton3">Sportif 3: Repos <i class="arrow down"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+				</div>
+			</div> 
+		</div>
+		<div class="w3-container w3-fifth">
+			<div class="w3-dropdown-hover w3-light-grey">
+				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton4">Sportif 4: Repos <i class="arrow down"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+				</div>
+			</div> 
+		</div>
+		<div class="w3-container w3-fifth">
+			<div class="w3-dropdown-hover w3-light-grey">
+				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton5">Sportif 5: Repos <i class="arrow down"></i></button>
+				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
+					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+				</div>
+			</div> 
+		</div>
 	</div>
-	<div class="selector">
-
-	</div>
-	<div class="canvas">
+	<div class="w3-container w3-padding canvas" style="height: 60vh">
 		<canvas class="canvas"></canvas>
 	</div>
-	<div class="controls">
-
-	</div>
-
-	
 
 	<script>
 		const $ = document.querySelector.bind(document);
@@ -147,44 +172,21 @@ SOFTWARE.
 		// Get canvas context
 		const canvasCtx = $("canvas.canvas").getContext("2d");
 
-		/*----------------------------------------------------------------------------------------------
-		-------------------------------------GENERATE ECG FUNCTION-------------------------------------
-		----------------------------------------------------------------------------------------------*/
-		function drawECG(){
-			let frame = Math.floor(time / totalTime);
-			let activeFramePeriodCount = frame * periodPerFrame;
-			let activeFramePeriodCountInFrame = activeFramePeriodCount - Math.floor(activeFramePeriodCount);
-			let activeFrameStartIndex = Math.round(activeFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
-			let activeFrameEndIndex = Math.round((time - frame * totalTime) / period * pointPerPeriod);
+		// Get buttons contexts
+		let buttons = [];
+		buttons[0] = $("#sportButton1");
+		buttons[1] = $("#sportButton2");
+		buttons[2] = $("#sportButton3");
+		buttons[3] = $("#sportButton4");
+		buttons[4] = $("#sportButton5");
 
-			// Generate the active frame data
-			let array1 = [];
-			for(let i = 0; i < activeFrameEndIndex; i++){
-				array1[i] = {
-					x: i / pointPerPeriod * period,
-					y:rawECG[(i + activeFrameStartIndex) % pointPerPeriod].y
-				};
-			};
-			data1 = array1;
-
-			if(time > totalTime){
-				chart.data.datasets[1].data = data2;
-				let pastFramePeriodCount = (frame - 1) * periodPerFrame;
-				let pastFramePeriodCountInFrame = pastFramePeriodCount - Math.floor(pastFramePeriodCount);
-				let pastFrameStartIndex = Math.round(pastFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
-				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod;
-
-				// Generate the past frame data
-				let array2 = [];
-				for(let i = activeFrameEndIndex + blanckECGInterval; i < pastFrameEndIndex; i++){
-					array2[i] = {
-						x: i / pointPerPeriod * period,
-						y:rawECG[(i + pastFrameStartIndex) % pointPerPeriod].y
-					};
-				};
-				data2 = array2;
-			};
-		};
+		buttons[0].addEventListener("click", onSportButtonClick1);
+		buttons[1].addEventListener("click", onSportButtonClick2);
+		buttons[2].addEventListener("click", onSportButtonClick3);
+		buttons[3].addEventListener("click", onSportButtonClick4);
+		buttons[4].addEventListener("click", onSportButtonClick5);
+		//const sportButton1 = $("#sportButton1");
+		//sportButton1.addEventListener("click", onSportButtonClick1);
 
 		/*----------------------------------------------------------------------------------------------
 		-----------------------------------------GRAPH SETTINGS-----------------------------------------
@@ -252,6 +254,59 @@ SOFTWARE.
 		};
 
 		/*----------------------------------------------------------------------------------------------
+		-------------------------------------GENERATE ECG FUNCTION-------------------------------------
+		----------------------------------------------------------------------------------------------*/
+		function drawECG(){
+			let frame = Math.floor(time / totalTime);
+			let activeFramePeriodCount = frame * periodPerFrame;
+			let activeFramePeriodCountInFrame = activeFramePeriodCount - Math.floor(activeFramePeriodCount);
+			let activeFrameStartIndex = Math.round(activeFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
+			let activeFrameEndIndex = Math.round((time - frame * totalTime) / period * pointPerPeriod);
+
+			// Generate the active frame data
+			let array1 = [];
+			for(let i = 0; i < activeFrameEndIndex; i++){
+				array1[i] = {
+					x: i / pointPerPeriod * period,
+					y:rawECG[(i + activeFrameStartIndex) % pointPerPeriod].y
+				};
+			};
+			data1 = array1;
+
+			if(time > totalTime){
+				chart.data.datasets[1].data = data2;
+				let pastFramePeriodCount = (frame - 1) * periodPerFrame;
+				let pastFramePeriodCountInFrame = pastFramePeriodCount - Math.floor(pastFramePeriodCount);
+				let pastFrameStartIndex = Math.round(pastFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
+				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod;
+
+				// Generate the past frame data
+				let array2 = [];
+				for(let i = activeFrameEndIndex + blanckECGInterval; i < pastFrameEndIndex; i++){
+					array2[i] = {
+						x: i / pointPerPeriod * period,
+						y:rawECG[(i + pastFrameStartIndex) % pointPerPeriod].y
+					};
+				};
+				data2 = array2;
+			};
+		};
+
+		/*----------------------------------------------------------------------------------------------
+		-------------------------------------BUTTON CLICK FUNCTION--------------------------------------
+		----------------------------------------------------------------------------------------------*/
+		function buttonClick(id){
+			for(let i = 0; i < 5; i++){
+				buttons[i].dataset.checked = "false"
+				buttons[i].classList.add("w3-light-grey");
+			}
+			buttons[id].dataset.checked = "true";
+			buttons[id].classList.remove("w3-light-grey");
+			buttons[id].classList.add("w3-green");
+			console.log(buttons[id].dataset.checked);
+		}
+
+		/*----------------------------------------------------------------------------------------------
 		---------------------------------------------EVENTS---------------------------------------------
 		----------------------------------------------------------------------------------------------*/
 		window.onload = function() {
@@ -270,7 +325,25 @@ SOFTWARE.
 			draw();
 		};
 
+		function onSportButtonClick1() {
+			buttonClick(0);
+		}
 
+		function onSportButtonClick2() {
+			buttonClick(1);
+		}
+
+		function onSportButtonClick3() {
+			buttonClick(2);
+		}
+
+		function onSportButtonClick4() {
+			buttonClick(3);
+		}
+
+		function onSportButtonClick5() {
+			buttonClick(4);
+		}
 
 		/*----------------------------------------------------------------------------------------------
 		------------------------------------------DRAW FUNCTION-----------------------------------------
@@ -281,7 +354,7 @@ SOFTWARE.
 
 			// Get the time
 			time = Date.now() / 1000 - startTime;
-			console.log("time: " + time);
+			//console.log("time: " + time);
 
 			drawECG();
 			
