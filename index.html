@@ -38,34 +38,9 @@ SOFTWARE.
 	<link rel="stylesheet" href="lib/w3.css"> 
 
 	<style>
+		/* Remove borders when highlighted in Chrome*/
 		button:focus {outline:0;}
 
-		i {
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-}
-
-		.right {
-				transform: rotate(-45deg);
-				-webkit-transform: rotate(-45deg);
-		}
-
-		.left {
-				transform: rotate(135deg);
-				-webkit-transform: rotate(135deg);
-		}
-
-		.up {
-				transform: rotate(-135deg);
-				-webkit-transform: rotate(-135deg);
-		}
-
-		.down {
-				transform: rotate(45deg);
-				-webkit-transform: rotate(45deg);
-		}
 	</style>
 </head>
 <body>
@@ -75,66 +50,43 @@ SOFTWARE.
 			<a href="#" class="w3-bar-item w3-button w3-right w3-xlarge">?</a>
 		</div> 
 	</div>
-	<div class="w3-row w3-padding w3-center">
-		<div class="w3-container w3-fifth">
-			<div class="w3-dropdown-hover w3-light-grey">
-				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton1">Sportif 1: Repos <i class="arrow down"></i></button>
-				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+
+	<div class="w3-row">
+		<div class="w3-col w3-right" style="width: 280px">
+			<div class="w3-card-4 w3-margin">
+				<header class="w3-container w3-blue">
+					<h2>Choix du sportif</h2>
+				</header>
+				<div class="w3-container" style="padding: 0px">
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="sportButton1">Sportif 1</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="sportButton2">Sportif 2</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="sportButton3">Sportif 3</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="sportButton4">Sportif 4</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="sportButton5">Sportif 5</button>
 				</div>
-			</div> 
-		</div>
-		<div class="w3-container w3-fifth">
-			<div class="w3-dropdown-hover w3-light-grey">
-				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton2">Sportif 2: Repos <i class="arrow down"></i></button>
-				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
+			</div>
+			<div class="w3-card-4 w3-margin">
+				<header class="w3-container w3-blue">
+					<h2>Etat du sportif</h2>
+				</header>
+				<div class="w3-container" style="padding: 0px">
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="stateButton1">Au repos</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="stateButton2">Après l'effort</button>
+					<button class="w3-button w3-block w3-light-grey w3-hover-green" id="stateButton3">Après récupération</button>
 				</div>
-			</div> 
+			</div>
 		</div>
-		<div class="w3-container w3-fifth">
-			<div class="w3-dropdown-hover w3-light-grey">
-				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton3">Sportif 3: Repos <i class="arrow down"></i></button>
-				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
-				</div>
-			</div> 
+		<div class="w3-card-4 w3-rest w3-margin">
+			<div class="w3-container w3-margin canvas" style="height: 80vh">
+				<canvas class="canvas"></canvas>
+			</div>
 		</div>
-		<div class="w3-container w3-fifth">
-			<div class="w3-dropdown-hover w3-light-grey">
-				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton4">Sportif 4: Repos <i class="arrow down"></i></button>
-				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
-				</div>
-			</div> 
-		</div>
-		<div class="w3-container w3-fifth">
-			<div class="w3-dropdown-hover w3-light-grey">
-				<button data-checked="true" class="w3-button w3-hover-green" id="sportButton5">Sportif 5: Repos <i class="arrow down"></i></button>
-				<div class="w3-dropdown-content w3-bar-block w3-border w3-light-grey">
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Repos</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Effort</a>
-					<a href="#" class="w3-bar-item w3-button w3-hover-green">Récupération</a>
-				</div>
-			</div> 
-		</div>
-	</div>
-	<div class="w3-container w3-padding canvas" style="height: 60vh">
-		<canvas class="canvas"></canvas>
 	</div>
 
 	<script>
 		const $ = document.querySelector.bind(document);
 
-		// Define the colors used in the app
+		// Define the colors used in the app CHANGE TO USE W3.CSS COLORSSSSSSSSSSSSSSSSSSSS
 		chartColors = {
 			red: "rgb(255, 99, 132)",
 			orange: "rgb(255, 159, 64)",
@@ -151,42 +103,55 @@ SOFTWARE.
 		let period = 0.5;
 		let totalTime = 5;
 
-		let periodPerFrame = totalTime / period;
+		let periodPerFrame;
 
-		let blanckECGInterval = Math.trunc(pointPerPeriod / period / 2.5);
+		let blanckECGInterval;
 
 		let rawECG;
 
 		let chart;
 
-		let newPoints = [];
 		let data1 = [];
 		let data2 = [];
 
 		let startTime;
-		let t1 = 0;
-		let t2;
 
-		let cursor = 0;
+		let activeSportButtonID = 0;
+		let activeStateButtonID = 0;
 
 		// Get canvas context
 		const canvasCtx = $("canvas.canvas").getContext("2d");
 
 		// Get buttons contexts
-		let buttons = [];
-		buttons[0] = $("#sportButton1");
-		buttons[1] = $("#sportButton2");
-		buttons[2] = $("#sportButton3");
-		buttons[3] = $("#sportButton4");
-		buttons[4] = $("#sportButton5");
+		let periods = [];
+		periods[0] = [0.8,0.4,0.7];
+		periods[1] = [0.8,0.4,0.7];
+		periods[2] = [0.8,0.4,0.7];
+		periods[3] = [0.8,0.4,0.7];
+		periods[4] = [0.8,0.4,0.7];
+		periods[5] = [0.8,0.4,0.7];
 
-		buttons[0].addEventListener("click", onSportButtonClick1);
-		buttons[1].addEventListener("click", onSportButtonClick2);
-		buttons[2].addEventListener("click", onSportButtonClick3);
-		buttons[3].addEventListener("click", onSportButtonClick4);
-		buttons[4].addEventListener("click", onSportButtonClick5);
-		//const sportButton1 = $("#sportButton1");
-		//sportButton1.addEventListener("click", onSportButtonClick1);
+		let sportButtons = [];
+		sportButtons[0] = $("#sportButton1");
+		sportButtons[1] = $("#sportButton2");
+		sportButtons[2] = $("#sportButton3");
+		sportButtons[3] = $("#sportButton4");
+		sportButtons[4] = $("#sportButton5");
+
+		sportButtons[0].addEventListener("click", onSportButtonClick1);
+		sportButtons[1].addEventListener("click", onSportButtonClick2);
+		sportButtons[2].addEventListener("click", onSportButtonClick3);
+		sportButtons[3].addEventListener("click", onSportButtonClick4);
+		sportButtons[4].addEventListener("click", onSportButtonClick5);
+
+		let stateButtons = [];
+		stateButtons[0] = $("#stateButton1");
+		stateButtons[1] = $("#stateButton2");
+		stateButtons[2] = $("#stateButton3");
+
+		stateButtons[0].addEventListener("click", onStateButtonClick1);
+		stateButtons[1].addEventListener("click", onStateButtonClick2);
+		stateButtons[2].addEventListener("click", onStateButtonClick3);
 
 		/*----------------------------------------------------------------------------------------------
 		-----------------------------------------GRAPH SETTINGS-----------------------------------------
@@ -245,7 +210,7 @@ SOFTWARE.
 							labelString: "Amplitude"
 						},
 						ticks: {
-							suggestedMin: -1,
+							suggestedMin: -2,
 							suggestedMax: 6,
 						}
 					}]
@@ -293,28 +258,59 @@ SOFTWARE.
 		};
 
 		/*----------------------------------------------------------------------------------------------
-		-------------------------------------BUTTON CLICK FUNCTION--------------------------------------
+		------------------------------------BUTTON CLICK FUNCTIONS--------------------------------------
 		----------------------------------------------------------------------------------------------*/
-		function buttonClick(id){
+		function sportButtonClick(id){
+			// Grey out all buttons
 			for(let i = 0; i < 5; i++){
-				buttons[i].dataset.checked = "false"
-				buttons[i].classList.add("w3-light-grey");
+				sportButtons[i].classList.add("w3-light-grey");
 			}
-			buttons[id].dataset.checked = "true";
-			buttons[id].classList.remove("w3-light-grey");
-			buttons[id].classList.add("w3-green");
-			console.log(buttons[id].dataset.checked);
+
+			// Highlight the active button
+			sportButtons[id].classList.remove("w3-light-grey");
+			sportButtons[id].classList.add("w3-green");
+			activeSportButtonID = id;
+
+			stateButtonClick(activeStateButtonID);
+		}
+
+		function stateButtonClick(id){
+			// Grey out all buttons
+			for(let i = 0; i < 3; i++){
+				stateButtons[i].classList.add("w3-light-grey");
+			}
+
+			// Highlight the active button
+			stateButtons[id].classList.remove("w3-light-grey");
+			stateButtons[id].classList.add("w3-green");
+			activeStateButtonID = id;
+
+			changePeriod();
+		}
+
+		/*----------------------------------------------------------------------------------------------
+		-------------------------------------CHANGE PERIOD FUNCTION-------------------------------------
+		----------------------------------------------------------------------------------------------*/
+		function changePeriod(){
+			// Restart the time and set the period
+			startTime = Date.now() / 1000;
+			period = periods[activeSportButtonID][activeStateButtonID];
+			periodPerFrame = totalTime / period;
+			blanckECGInterval = Math.trunc(pointPerPeriod / period / 2);
+
+			// empty the datas
+			data1.length = 0;
+			data2.length = 0;
 		}
 
 		/*----------------------------------------------------------------------------------------------
 		---------------------------------------------EVENTS---------------------------------------------
 		----------------------------------------------------------------------------------------------*/
 		window.onload = function() {
-			// Init the clock
-			startTime = Date.now() / 1000;
+			sportButtonClick(0);
 
 			// Generate the raw ECG wave
-			rawECG = ecg();
+			rawECG = ecg(pointPerPeriod);
 
 			// Create the graph and link the data
 			chart = new Chart(canvasCtx, config);
@@ -326,23 +322,35 @@ SOFTWARE.
 		};
 
 		function onSportButtonClick1() {
-			buttonClick(0);
+			sportButtonClick(0);
 		}
 
 		function onSportButtonClick2() {
-			buttonClick(1);
+			sportButtonClick(1);
 		}
 
 		function onSportButtonClick3() {
-			buttonClick(2);
+			sportButtonClick(2);
 		}
 
 		function onSportButtonClick4() {
-			buttonClick(3);
+			sportButtonClick(3);
 		}
 
 		function onSportButtonClick5() {
-			buttonClick(4);
+			sportButtonClick(4);
+		}
+
+		function onStateButtonClick1() {
+			stateButtonClick(0);
+		}
+
+		function onStateButtonClick2() {
+			stateButtonClick(1);
+		}
+
+		function onStateButtonClick3() {
+			stateButtonClick(2);
 		}
 
 		/*----------------------------------------------------------------------------------------------
