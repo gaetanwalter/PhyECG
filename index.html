@@ -29,7 +29,7 @@ SOFTWARE.
 <head>
 	<meta charset="UTF-8"> 
 
-	<title>Electrocardiogramme</title>
+	<title>Electrocardiogrammes</title>
 
 	<script src="lib/Chart.js/Chart.bundle.min.js"></script>
 
@@ -87,23 +87,16 @@ SOFTWARE.
 
 		// Define the colors used in the app CHANGE TO USE W3.CSS COLORSSSSSSSSSSSSSSSSSSSS
 		chartColors = {
-			red: "rgb(255, 99, 132)",
-			orange: "rgb(255, 159, 64)",
-			yellow: "rgb(255, 205, 86)",
-			green: "rgb(75, 192, 192)",
-			blue: "rgb(54, 162, 235)",
-			purple: "rgb(153, 102, 255)",
-			grey: "rgb(201, 203, 207)"
+			// Copy from w3-blue
+			blue: "rgb(33, 150, 243)",
 		};
 
 		// Declare vars
 		const pointPerPeriod = 80;
 
-		let period = 0.5;
 		let totalTime = 5;
 
 		let periodPerFrame;
-
 		let blanckECGInterval;
 
 		let rawECG;
@@ -221,13 +214,13 @@ SOFTWARE.
 		-------------------------------------GENERATE ECG FUNCTION-------------------------------------
 		----------------------------------------------------------------------------------------------*/
 		function drawECG(){
+			// Generate the active frame data
 			let frame = Math.floor(time / totalTime);
 			let activeFramePeriodCount = frame * periodPerFrame;
 			let activeFramePeriodCountInFrame = activeFramePeriodCount - Math.floor(activeFramePeriodCount);
 			let activeFrameStartIndex = Math.round(activeFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
 			let activeFrameEndIndex = Math.round((time - frame * totalTime) / period * pointPerPeriod);
 
-			// Generate the active frame data
 			data1.length = 0;
 			for(let i = 0; i < activeFrameEndIndex; i++){
 				data1[i] = {
@@ -236,14 +229,13 @@ SOFTWARE.
 				};
 			};
 
+			// Generate the past frame data
 			if(time > totalTime){
-				chart.data.datasets[1].data = data2;
 				let pastFramePeriodCount = (frame - 1) * periodPerFrame;
 				let pastFramePeriodCountInFrame = pastFramePeriodCount - Math.floor(pastFramePeriodCount);
 				let pastFrameStartIndex = Math.round(pastFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
 				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod - pastFrameStartIndex;
 
-				// Generate the past frame data
 				data2.length = 0;
 				for(let i = activeFrameEndIndex + blanckECGInterval; i < pastFrameEndIndex; i++){
 					data2[i - (activeFrameEndIndex + blanckECGInterval)] = {
@@ -359,12 +351,9 @@ SOFTWARE.
 
 			// Get the time
 			time = Date.now() / 1000 - startTime;
-			//console.log("time: " + time);
 
+			// Draw the ECG
 			drawECG();
-			
-			chart.data.datasets[0].data = data1;
-			chart.data.datasets[1].data = data2;
 			chart.update();
 		}
 	</script>
