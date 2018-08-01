@@ -115,7 +115,7 @@ SOFTWARE.
 
 		// Get buttons contexts
 		let periods = [];
-		periods[0] = [0.8,0.4,0.7];
+		periods[0] = [0.9,0.4,0.7];
 		periods[1] = [0.8,0.4,0.7];
 		periods[2] = [0.8,0.4,0.7];
 		periods[3] = [0.8,0.4,0.7];
@@ -217,8 +217,8 @@ SOFTWARE.
 			let frame = Math.floor(time / totalTime);
 			let activeFramePeriodCount = frame * periodPerFrame;
 			let activeFramePeriodCountInFrame = activeFramePeriodCount - Math.floor(activeFramePeriodCount);
-			let activeFrameStartIndex = Math.round(activeFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
-			let activeFrameEndIndex = Math.round((time - frame * totalTime) / period * pointPerPeriod);
+			let activeFrameStartIndex = Math.floor(activeFramePeriodCountInFrame * pointPerPeriod);
+			let activeFrameEndIndex = Math.floor((time - frame * totalTime) / period * pointPerPeriod);
 
 			data1.length = 0;
 			for(let i = 0; i < activeFrameEndIndex; i++){
@@ -232,8 +232,8 @@ SOFTWARE.
 			if(time > totalTime){
 				let pastFramePeriodCount = (frame - 1) * periodPerFrame;
 				let pastFramePeriodCountInFrame = pastFramePeriodCount - Math.floor(pastFramePeriodCount);
-				let pastFrameStartIndex = Math.round(pastFramePeriodCountInFrame / period * pointPerPeriod); // Nommer /period*80?
-				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod - pastFrameStartIndex;
+				let pastFrameStartIndex = Math.floor(pastFramePeriodCountInFrame * pointPerPeriod);
+				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod;
 
 				data2.length = 0;
 				for(let i = activeFrameEndIndex + blanckECGInterval; i < pastFrameEndIndex; i++){
@@ -284,6 +284,7 @@ SOFTWARE.
 			startTime = Date.now() / 1000;
 			period = periods[activeSportButtonID][activeStateButtonID];
 			periodPerFrame = totalTime / period;
+			console.log(periodPerFrame);
 			blanckECGInterval = Math.trunc(pointPerPeriod / period / 2);
 
 			// empty the datas
@@ -310,7 +311,9 @@ SOFTWARE.
 		};
 
 		function onSportButtonClick1() {
-			sportButtonClick(0);
+			//sportButtonClick(0);
+			console.log(data1);
+			console.log(data2);
 		}
 
 		function onSportButtonClick2() {
