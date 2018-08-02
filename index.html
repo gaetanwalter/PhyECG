@@ -92,20 +92,25 @@ SOFTWARE.
 		};
 
 		// Declare vars
-		const pointPerPeriod = 80;
+		const pointPerPeriod = 40;
 
 		let totalTime = 5;
 
 		let periodPerFrame;
+		let blanckECGIntervalTime = 0.5;
 		let blanckECGInterval;
 
-		let rawECG;
+		let rawECG = [];
+		let rawRandomECG = [];
 		let chart;
 
 		let data1 = [];
 		let data2 = [];
 
 		let startTime;
+		let time;
+
+		let indexCursor = 0;
 
 		let activeSportButtonID = 0;
 		let activeStateButtonID = 0;
@@ -113,7 +118,8 @@ SOFTWARE.
 		// Get canvas context
 		const canvasCtx = $("canvas.canvas").getContext("2d");
 
-		// Get buttons contexts
+		// Set the periods
+		let period;
 		let periods = [];
 		periods[0] = [0.9,0.4,0.7];
 		periods[1] = [0.8,0.4,0.7];
@@ -122,6 +128,7 @@ SOFTWARE.
 		periods[4] = [0.8,0.4,0.7];
 		periods[5] = [0.8,0.4,0.7];
 
+		// Get buttons contexts
 		let sportButtons = [];
 		sportButtons[0] = $("#sportButton1");
 		sportButtons[1] = $("#sportButton2");
@@ -160,7 +167,6 @@ SOFTWARE.
 				{
 					label: "ECG2",
 					borderColor: chartColors.blue,
-					// Hides the points...
 					radius: 0,
 					fill: false
 				}
@@ -210,7 +216,26 @@ SOFTWARE.
 		};
 
 		/*----------------------------------------------------------------------------------------------
-		-------------------------------------GENERATE ECG FUNCTION-------------------------------------
+		-------------------------------------GENERATE ECG FUNCTIONS-------------------------------------
+		----------------------------------------------------------------------------------------------*/
+		function generateRandomPeriods(){
+			let timeCursor = 0;
+			let randomPeriods = [];
+			rawRandomECG[0] = {x: 0, y: 0};
+			for(let i = 0; i < 1000; i++){
+				randomPeriods[i] = period + 0.25 - Math.random() * 0.5; // !!!!!!!!!! period fixe ici
+				for(let j = 0; j < pointPerPeriod; j++){
+					rawRandomECG[i * pointPerPeriod + j] = {
+						x: timeCursor,
+						y: rawECG[j].y
+					};
+					timeCursor += randomPeriods[i] / pointPerPeriod;
+				};
+			};
+		};
+
+		/*----------------------------------------------------------------------------------------------
+		-------------------------------------GENERATE ECG FUNCTIONS-------------------------------------
 		----------------------------------------------------------------------------------------------*/
 		function drawECG(){
 			// Generate the active frame data
@@ -233,7 +258,7 @@ SOFTWARE.
 				let pastFramePeriodCount = (frame - 1) * periodPerFrame;
 				let pastFramePeriodCountInFrame = pastFramePeriodCount - Math.floor(pastFramePeriodCount);
 				let pastFrameStartIndex = Math.floor(pastFramePeriodCountInFrame * pointPerPeriod);
-				let pastFrameEndIndex = periodPerFrame / period * pointPerPeriod;
+				let pastFrameEndIndex = periodPerFrame * pointPerPeriod;
 
 				data2.length = 0;
 				for(let i = activeFrameEndIndex + blanckECGInterval; i < pastFrameEndIndex; i++){
@@ -241,6 +266,40 @@ SOFTWARE.
 						x: i / pointPerPeriod * period,
 						y:rawECG[(i + pastFrameStartIndex) % pointPerPeriod].y
 					};
+				};
+			};
+
+		};
+
+		function drawECG2(){
+			if(time > 500){
+				// Restart the time
+				startTime = Date.now() / 1000;
+				time = 0;
+				indexCursor = 0;
+			}
+			let frame = Math.floor(time / totalTime);
+			while(rawRandomECG[indexCursor].x < frame * totalTime){
+				indexCursor++;
+			}
+			data1.length = 0;
+			let ind = 0;
+			while(rawRandomECG[ind + indexCursor].x < time){
+				data1[ind] = {
+					x: rawRandomECG[ind + indexCursor].x % totalTime,
+					y: rawRandomECG[ind + indexCursor].y
+				};
+				ind++;
+			};
+			if(time > totalTime){
+				data2.length = 0;
+				let ind2 = 1;
+				while(rawRandomECG[indexCursor - ind2].x > time - totalTime + blanckECGIntervalTime){
+					data2[ind2] = {
+						x: rawRandomECG[indexCursor - ind2].x % totalTime,
+						y: rawRandomECG[indexCursor - ind2].y
+					};
+					ind2++;
 				};
 			};
 		};
@@ -284,8 +343,11 @@ SOFTWARE.
 			startTime = Date.now() / 1000;
 			period = periods[activeSportButtonID][activeStateButtonID];
 			periodPerFrame = totalTime / period;
-			console.log(periodPerFrame);
-			blanckECGInterval = Math.trunc(pointPerPeriod / period / 2);
+			blanckECGInterval = Math.trunc(pointPerPeriod / period * blanckECGIntervalTime); // 0.5s
+
+			// randomECG special init
+			indexCursor = 0;
+			generateRandomPeriods();
 
 			// empty the datas
 			data1.length = 0;
@@ -296,10 +358,15 @@ SOFTWARE.
 		---------------------------------------------EVENTS---------------------------------------------
 		----------------------------------------------------------------------------------------------*/
 		window.onload = function() {
-			sportButtonClick(0);
 
 			// Generate the raw ECG wave
 			rawECG = ecg(pointPerPeriod);
+
+			// Set the default  settings
+			sportButtonClick(0);
+
+			// Generate the random periods
+			generateRandomPeriods();
 
 			// Create the graph and link the data
 			chart = new Chart(canvasCtx, config);
@@ -311,9 +378,7 @@ SOFTWARE.
 		};
 
 		function onSportButtonClick1() {
-			//sportButtonClick(0);
-			console.log(data1);
-			console.log(data2);
+			sportButtonClick(0);
 		}
 
 		function onSportButtonClick2() {
@@ -355,8 +420,16 @@ SOFTWARE.
 			time = Date.now() / 1000 - startTime;
 
 			// Draw the ECG
-			drawECG();
+			if(activeSportButtonID == 3){
+				drawECG2();
+			}
+			else{
+				drawECG();
+			}
+			let t1 = performance.now()
 			chart.update();
+			let t2 = performance.now()
+			console.log(t2-t1);
 		}
 	</script>
 </body>
