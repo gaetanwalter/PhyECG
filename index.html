@@ -28,7 +28,7 @@ SOFTWARE.
 <html>
 <head>
 	<meta charset="UTF-8">
-	
+
 	<link rel="icon" href="favicon.ico" />
 
 	<title>Electrocardiogrammes</title>
@@ -51,7 +51,7 @@ SOFTWARE.
 	<div class="header w3-blue-grey">
 		<div class="w3-bar w3-card-4 w3-center">
 			<span class="w3-bar-item w3-display-topmiddle w3-xlarge"><b>Electrocardiogrammes</b></span>
-			<a href="#" class="w3-bar-item w3-button w3-right w3-xlarge"><b><i class="fas fa-info-circle"></i></b></a>
+			<button class="w3-bar-item w3-button w3-right w3-xlarge" id="infoButton"><b><i class="fas fa-info-circle"></i></b></button>
 		</div> 
 	</div>
 
@@ -93,6 +93,22 @@ SOFTWARE.
 			</div>
 		</div>
 	</div>
+
+	<!-- Modal card -->
+	<div id="modal" class="w3-modal">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-teal"> 
+        <span onclick="document.getElementById('modal').style.display='none'" 
+        class="w3-button w3-display-topright"><i class="fas fa-times"></i></span>
+        <h2>À propos</h2>
+      </header>
+      <div class="w3-container">
+        <p>Description</p>
+				<p>Coordonnées</p>
+				<p>Licence</p>
+      </div>
+    </div>
+  </div>
 
 	<script>
 		const $ = document.querySelector.bind(document);
@@ -173,6 +189,9 @@ SOFTWARE.
 
 		let pauseButton = $("#pauseButton");
 		pauseButton.addEventListener("click", onPauseButtonClick);
+
+		let infoButton = $("#infoButton");
+		infoButton.addEventListener("click", onInfoButtonClick);
 
 		/*----------------------------------------------------------------------------------------------
 		-----------------------------------------GRAPH SETTINGS-----------------------------------------
@@ -461,6 +480,10 @@ SOFTWARE.
 				pauseButton.classList.remove("w3-white");
 				pauseButton.classList.add("w3-red");
 			}
+		}
+
+		function onInfoButtonClick() {
+			$("#modal").style.display="block";
 		}
 
 		/*----------------------------------------------------------------------------------------------
