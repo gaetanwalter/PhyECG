@@ -57,7 +57,7 @@ SOFTWARE.
 		<div class="w3-col w3-right" style="width: 280px">
 			<!-- Top-right card -->
 			<div class="w3-card-4 w3-margin">
-				<header class="w3-container w3-blue">
+				<header class="w3-container w3-blue-grey">
 					<h3>Choix du sportif</h3>
 				</header>
 				<div class="w3-container" style="padding: 0px">
@@ -70,7 +70,7 @@ SOFTWARE.
 			</div>
 			<!-- Middle-right card -->
 			<div class="w3-card-4 w3-margin">
-				<header class="w3-container w3-blue">
+				<header class="w3-container w3-blue-grey">
 					<h3>Etat du sportif</h3>
 				</header>
 				<div class="w3-container" style="padding: 0px">
@@ -469,7 +469,11 @@ SOFTWARE.
 			requestAnimationFrame(draw);
 
 			// Get the time
+			if(paused == true){
+				startTime += Date.now() / 1000 - startTime - time;
+			}
 			time = Date.now() / 1000 - startTime;
+
 
 			// Draw the ECG
 			if(activeSportButtonID == 3){
