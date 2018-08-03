@@ -43,6 +43,7 @@ SOFTWARE.
 	</style>
 </head>
 <body class="w3-light-grey">
+	<!-- Header bar -->
 	<div class="header w3-blue-grey">
 		<div class="w3-bar w3-center">
 			<span class="w3-bar-item w3-display-topmiddle w3-xlarge"><b>Electrocardiogrammes</b></span>
@@ -52,6 +53,7 @@ SOFTWARE.
 
 	<div class="w3-row">
 		<div class="w3-col w3-right" style="width: 280px">
+			<!-- Top-right card -->
 			<div class="w3-card-4 w3-margin">
 				<header class="w3-container w3-blue">
 					<h3>Choix du sportif</h3>
@@ -64,6 +66,7 @@ SOFTWARE.
 					<button class="w3-button w3-block w3-hover-green" id="sportButton5">Sportif 5</button>
 				</div>
 			</div>
+			<!-- Bottom-right card -->
 			<div class="w3-card-4 w3-margin">
 				<header class="w3-container w3-blue">
 					<h3>Etat du sportif</h3>
@@ -75,6 +78,7 @@ SOFTWARE.
 				</div>
 			</div>
 		</div>
+		<!-- Canvas card -->
 		<div class="w3-card-4 w3-rest w3-margin w3-white">
 			<div class="w3-container w3-margin canvas" style="height: 80vh">
 				<canvas class="canvas"></canvas>
@@ -94,22 +98,28 @@ SOFTWARE.
 		// Declare vars
 		const pointPerPeriod = 40;
 
+		// Canvas length
 		let totalTime = 5;
 
 		let periodPerFrame;
 		let blanckECGIntervalTime = 0.5;
 		let blanckECGInterval;
-
+		
+		// ECG pattern
 		let rawECG = [];
+		// Full arythmic ECG array
 		let rawRandomECG = [];
+
 		let chart;
 
+		// data1 = current frame array; data2 = past frame array
 		let data1 = [];
 		let data2 = [];
 
 		let startTime;
 		let time;
 
+		// Used to seek in rawRandomECG faster
 		let indexCursor = 0;
 
 		let activeSportButtonID = 0;
@@ -223,7 +233,7 @@ SOFTWARE.
 			let randomPeriods = [];
 			rawRandomECG[0] = {x: 0, y: 0};
 			for(let i = 0; i < 1000; i++){
-				randomPeriods[i] = period + 0.25 - Math.random() * 0.5; // !!!!!!!!!! period fixe ici
+				randomPeriods[i] = period + 0.25 - Math.random() * 0.5;
 				for(let j = 0; j < pointPerPeriod; j++){
 					rawRandomECG[i * pointPerPeriod + j] = {
 						x: timeCursor,
@@ -237,7 +247,7 @@ SOFTWARE.
 		/*----------------------------------------------------------------------------------------------
 		-------------------------------------GENERATE ECG FUNCTIONS-------------------------------------
 		----------------------------------------------------------------------------------------------*/
-		function drawECG(){
+		function drawRegularECG(){
 			// Generate the active frame data
 			let frame = Math.floor(time / totalTime);
 			let activeFramePeriodCount = frame * periodPerFrame;
@@ -271,17 +281,17 @@ SOFTWARE.
 
 		};
 
-		function drawECG2(){
+		function drawArythmicECG(){
+			// Reset when we reach "the end" of rawRandomECG
 			if(time > 500){
-				// Restart the time
-				startTime = Date.now() / 1000;
-				time = 0;
-				indexCursor = 0;
-			}
+				changePeriod();
+			};
+			// Find the usefull part of rawRandomECG
 			let frame = Math.floor(time / totalTime);
 			while(rawRandomECG[indexCursor].x < frame * totalTime){
 				indexCursor++;
-			}
+			};
+			// Draw the active frame
 			data1.length = 0;
 			let ind = 0;
 			while(rawRandomECG[ind + indexCursor].x < time){
@@ -291,8 +301,9 @@ SOFTWARE.
 				};
 				ind++;
 			};
+			// Draw the past frame
+			data2.length = 0;
 			if(time > totalTime){
-				data2.length = 0;
 				let ind2 = 1;
 				while(rawRandomECG[indexCursor - ind2].x > time - totalTime + blanckECGIntervalTime){
 					data2[ind2] = {
@@ -341,6 +352,7 @@ SOFTWARE.
 		function changePeriod(){
 			// Restart the time and set the period
 			startTime = Date.now() / 1000;
+			time = 0;
 			period = periods[activeSportButtonID][activeStateButtonID];
 			periodPerFrame = totalTime / period;
 			blanckECGInterval = Math.trunc(pointPerPeriod / period * blanckECGIntervalTime); // 0.5s
@@ -365,10 +377,7 @@ SOFTWARE.
 			// Set the default  settings
 			sportButtonClick(0);
 
-			// Generate the random periods
-			generateRandomPeriods();
-
-			// Create the graph and link the data
+			// Create the graph and link the datas
 			chart = new Chart(canvasCtx, config);
 			chart.data.datasets[0].data = data1;
 			chart.data.datasets[1].data = data2;
@@ -421,15 +430,13 @@ SOFTWARE.
 
 			// Draw the ECG
 			if(activeSportButtonID == 3){
-				drawECG2();
+				drawArythmicECG();
 			}
 			else{
-				drawECG();
+				drawRegularECG();
 			}
-			let t1 = performance.now()
+
 			chart.update();
-			let t2 = performance.now()
-			console.log(t2-t1);
 		}
 	</script>
 </body>
