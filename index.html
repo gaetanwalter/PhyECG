@@ -45,7 +45,7 @@ SOFTWARE.
 <body class="w3-light-grey">
 	<!-- Header bar -->
 	<div class="header w3-blue-grey">
-		<div class="w3-bar w3-center">
+		<div class="w3-bar w3-card-4 w3-center">
 			<span class="w3-bar-item w3-display-topmiddle w3-xlarge"><b>Electrocardiogrammes</b></span>
 			<a href="#" class="w3-bar-item w3-button w3-right w3-xlarge"><b>?</b></a>
 		</div> 
@@ -164,6 +164,21 @@ SOFTWARE.
 		/*----------------------------------------------------------------------------------------------
 		-----------------------------------------GRAPH SETTINGS-----------------------------------------
 		----------------------------------------------------------------------------------------------*/
+		// Hack to hide ticks
+		let withTicks = {
+			display: true,
+			min: 0,
+			max: totalTime,
+			stepSize: 0.1
+		};
+		let noTicks = {
+			display: false,
+			autoSkip: false,
+			min: 0,
+			max: totalTime,
+			stepSize: 0.06
+		};
+
 		let config = {
 			type: "line",
 			data: {
@@ -202,18 +217,13 @@ SOFTWARE.
 							display: true,
 							labelString: "Temps (s)"
 						},
-						ticks: {
-							min: 0,
-							max: totalTime,
-							//autoSkip: true,
-							//maxTicksLimit: 10,
-							stepSize: .1
-						},
+						ticks: withTicks,
 					}],
 					yAxes: [{
 						display: true,
 						scaleLabel: {
 							display: true,
+							padding: 0,
 							labelString: "Amplitude"
 						},
 						ticks: {
@@ -329,6 +339,14 @@ SOFTWARE.
 			sportButtons[id].classList.add("w3-green");
 			activeSportButtonID = id;
 
+			if(id == 1){
+				// Hack to hide the ticks
+				chart.options.scales.xAxes[0].ticks = noTicks;
+			}
+			else{
+				chart.options.scales.xAxes[0].ticks = withTicks;
+			}
+
 			stateButtonClick(activeStateButtonID);
 		}
 
@@ -374,13 +392,13 @@ SOFTWARE.
 			// Generate the raw ECG wave
 			rawECG = ecg(pointPerPeriod);
 
-			// Set the default  settings
-			sportButtonClick(0);
-
 			// Create the graph and link the datas
 			chart = new Chart(canvasCtx, config);
 			chart.data.datasets[0].data = data1;
 			chart.data.datasets[1].data = data2;
+
+			// Set the default  settings
+			sportButtonClick(0);
 
 			// Initial graph draw
 			draw();
